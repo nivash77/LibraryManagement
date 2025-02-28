@@ -7,11 +7,11 @@ public class NormalUser extends User{
         super(userId, userName);
         this.hasPendingFees = hasPendingFees;
     }
-    public NormalUser(int userId, String userName) {
-        super(userId, userName);
+    public NormalUser(int userId, String userName,String email) {
+        super(userId, userName,email,"Librarian");
     }
  
-    public String getRole() {
+    public  String getRole() {
         return "Library Member";
     }
 

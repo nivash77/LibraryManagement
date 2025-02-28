@@ -1,8 +1,8 @@
 package Model;
 
 public class Librarian extends User{
-	public Librarian(int userId, String userName) {
-        super(userId, userName);
+	public Librarian(int userId, String userName,String email) {
+        super(userId, userName,email,"User");
     }
 
     public String getRole() {

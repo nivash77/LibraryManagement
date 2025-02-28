@@ -3,34 +3,45 @@ package Main;
 import View.LibraryView;
 import View.LibrarianView;
 import View.UserView;
-import java.util.Scanner;
+import controllers.LibraryController;
 
+import Model.BookDAO;
+import Model.BorrowingDAO;
+import Model.UserDAO;
+import Model.BookDAOImpl;
+import Model.BorrowingDAOImpl;
+import Model.UserDAOImpl;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        
-        LibraryView librarian;
-        LibraryView User;
-        System.out.println("\n Welcome to Library Management System");
-        System.out.println("1. Login as Librarian");
-        System.out.println("2. Login as User");
-        System.out.print("Choose your role: ");
-        int choice = sc.nextInt();
-        
-        if (choice == 1) {
-           librarian =new LibrarianView();
-           librarian.start(); 
-        }
-        else if (choice == 2) {
-        	User =new UserView();
-        	User.start();
-        	
-        } else {
-            System.out.println("Invalid choice! Exiting...");
-        }
+    	  Scanner sc = new Scanner(System.in);
 
-        sc.close();
+          BookDAO bookDAO = new BookDAOImpl();
+          UserDAO userDAO = new UserDAOImpl();
+          BorrowingDAO borrowingDAO = new BorrowingDAOImpl(userDAO, bookDAO);
+
+          LibraryController libraryController = new LibraryController(bookDAO, borrowingDAO);
+          
+
+          System.out.println("\n Welcome to Library Management System");
+          System.out.println("1. Login as Librarian");
+          System.out.println("2. Login as User");
+          System.out.print("Choose your role: ");
+          int choice = sc.nextInt();
+
+          LibraryView view = null;
+          if (choice == 1) {
+              view = new LibrarianView(libraryController);
+          } else if (choice == 2) {
+              view = new UserView(libraryController,userDAO);
+          } else {
+              System.out.println("Invalid choice. Exiting...");
+              return;
+          }
+
+          view.start();
+          sc.close();
     }
 }
 

@@ -137,6 +137,15 @@ public class DBConnect {
             stmt.setObject(i + 1, params[i]);
         }
     }
+    public void closeResources(ResultSet rs, PreparedStatement pstmt, Connection conn) {
+        try {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public void closeConnection() {
         try {
             if (con != null) {

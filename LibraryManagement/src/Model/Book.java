@@ -8,7 +8,6 @@ public class Book {
 	private  int totalBook=0;
 	private int publizerId;
 	private int amount;
-	private int userId;
 	private int domainId;
 	
 	
@@ -31,7 +30,7 @@ public class Book {
 	    this.totalBook = other.totalBook;
 	    this.publizerId = other.publizerId;
 	    this.amount = other.amount;
-	    this.userId = other.userId;
+	    
 	    this.domainId = other.domainId;
 	}
 	 public int getBookId() { 
@@ -62,10 +61,10 @@ public class Book {
 	    {
 	    	return amount;
 	    }
-	    public int getUserId()
-	    {
-	    	return userId; 
-	    }
+//	    public int getUserId()
+//	    {
+//	    	return userId; 
+//	    }
 	    public int getDomainId()
 	    {
 	    	return domainId;
@@ -108,9 +107,9 @@ public class Book {
 	    public void setAmount(int amount) {
 	    	this.amount=amount;
 	    }
-	    public void setuserId(int userId) {
-	    	this.userId=userId;
-	    }
+//	    public void setuserId(int userId) {
+//	    	this.userId=userId;
+//	    }
 	    public void setdomainId(int domainId) {
 	    	this.domainId=domainId;
 	    }
@@ -120,7 +119,7 @@ public class Book {
 	               "Author: " + author + "\n" +
 	               "Publisher ID: " + publizerId + "\n" +
 	               "Amount: " + amount + "\n" +
-	               "User ID: " + userId + "\n" +
+	               //"User ID: " + userId + "\n" +
 	               "Domain ID: " + domainId + "\n" +
 	               "Total Copies: " + totalBook + "\n" +
 	               "Available: " + Available + "\n";

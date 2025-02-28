@@ -1,24 +1,36 @@
 package View;
+import controllers.LibraryController;
 import Model.User;
-import controllers.Library;
-import controllers.UserAuthentication;
+import Model.UserDAO;
+
+//import Model.BookDAO;
+//import Model.BookDAOImpl;
+import Model.NormalUser;
+//import Model.BorrowingDAOImpl;
+//import Model.BorrowingDAO;
 import java.util.Scanner;
 
 public class UserView implements LibraryView {
+	 private LibraryController controller;
+	 //private BookDAO bookDAO=new BookDAOImpl();
+	 
+	 //private BorrowingDAO borrowingDAO=new BorrowingDAOImpl();
+	 private UserDAO userDAO;
+	  
+	  public UserView(LibraryController libraryController,UserDAO userDAO) {
+	        this.controller = libraryController;
+	          this. userDAO =userDAO;
+	    }
     public void start() {
         Scanner sc = new Scanner(System.in);
-        Library controller = new Library();
-        UserAuthentication authController = new UserAuthentication();
+        //LibraryController controller = new LibraryController(bookDAO, borrowingDAO );
         boolean exit = false;
-
         System.out.println("Welcome to the Library System!");
-
         System.out.println("1. Register as a New User");
         System.out.println("2. Login with Email & Password");
         System.out.print("Enter your choice: ");
         int initialChoice = sc.nextInt();
         sc.nextLine();
-
         User loggedInUser = null;
 
         if (initialChoice == 1) {
@@ -29,15 +41,21 @@ public class UserView implements LibraryView {
             System.out.print("Enter your Password: ");
             String password = sc.nextLine();
 
-            User newUser = new User(0, userName, email, "User");
+            User newUser = new NormalUser(0, userName, email);
 
-            int userId = authController.registerUser(newUser, password);
+            int userId = userDAO.registerUser(newUser, password);
 
             if (userId > 0) {
-                loggedInUser = new User(userId, userName, email, "User");
-                System.out.println("User registered successfully! Welcome, " + loggedInUser.getUserName() + "!");
-            } else {
-                System.out.println("User registration failed.");
+                loggedInUser = new NormalUser(userId, userName, email);
+                System.out.println("User registered successfully Welcome, " + loggedInUser.getUserName());
+            }
+            else if(userId==-2) {
+           	 System.out.println("User is already exits");
+           	 return;
+            }
+            else {
+                System.out.println("User registration failed...");
+                return ;
             }
         }
 
@@ -47,26 +65,28 @@ public class UserView implements LibraryView {
             System.out.print("Enter your Password: ");
             String password = sc.nextLine();
 
-            loggedInUser = authController.loginUser(email, password);
+            loggedInUser = userDAO.loginUser(email, password);
 
             if (loggedInUser == null) {
-                System.out.println("Login failed. Check email & password.");
+                System.out.println("Login failed. Check email & password...");
+                return ;
             } else {
-                System.out.println("Welcome, " + loggedInUser.getUserName() + "!");
+                System.out.println("Welcome, " + loggedInUser.getUserName());
             }
         }
 
         else {
-            System.out.println("Invalid choice. Exiting...");
+            System.out.println("Invalid choice Exiting...");
             return;
         }
 
         while (!exit) {
             System.out.println("\n USER MENU ");
-            System.out.println("1. Borrow a Book");
-            System.out.println("2. Return a Book");
-            System.out.println("3. Check Pending Fees");
-            System.out.println("4. Exit");
+            System.out.println("1.Borrow a Book");
+            System.out.println("2.Return a Book");
+            System.out.println("3.Check Pending Fees");
+            System.out.println("4.Change password");
+            System.out.println("5.Exit");
             System.out.print("Enter your choice: ");
             int choice = sc.nextInt();
 
@@ -88,14 +108,25 @@ public class UserView implements LibraryView {
                     int checkBookId = sc.nextInt();
                     System.out.println(controller.checkPendingFees(loggedInUser.getUserId(), checkBookId));
                     break;
-
+                
                 case 4:
+                	System.out.print("Enter a email:");
+                	String email=sc.next();
+                	sc.nextLine();
+                	System.out.print("Enter a old Password:");
+                	String oldpassword=sc.nextLine();
+                	System.out.print("Enter a new Password:");
+                	String newpassword=sc.nextLine();
+                	System.out.println(userDAO.ChangePassword(email, oldpassword, newpassword));
+                	break;
+
+                case 5:
                     exit = true;
                     System.out.println("Exiting Library System...");
                     break;
 
                 default:
-                    System.out.println("Invalid choice. Try again.");
+                    System.out.println("Invalid choice Try again...");
             }
         }
         sc.close();

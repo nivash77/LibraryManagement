@@ -39,12 +39,12 @@ public class Library{
 //  }
   public String addBook(Book bookItems) {
 	    try {
-	        // Check if the book already exists in the database
+	       
 	        String checkQuery = "SELECT totalBook FROM Books WHERE bookName = ? AND author = ?";
 	        ResultSet rs = db.executeQuery(checkQuery, bookItems.getBookName(), bookItems.getAuthor());
 
 	        if (rs != null && rs.next()) {
-	            // Book exists, update totalBook count
+	           
 	            int currentCount = rs.getInt("totalBook");
 	            int updatedCount = currentCount + bookItems.getTotalBook();
 
@@ -369,7 +369,7 @@ public class Library{
 	            return "No users found in the database.";
 	        }
 
-	        result.append("📋 All Registered Users:\n");
+	        result.append(" All Registered Users:\n");
 	        
 	        while (rs.next()) {
 	            int userId = rs.getInt("user_id");
