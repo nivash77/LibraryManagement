@@ -86,7 +86,8 @@ public class UserView implements LibraryView {
             System.out.println("2.Return a Book");
             System.out.println("3.Check Pending Fees");
             System.out.println("4.Change password");
-            System.out.println("5.Exit");
+            System.out.println("5.shelf number of Book");
+            System.out.println("6.Exit");
             System.out.print("Enter your choice: ");
             int choice = sc.nextInt();
 
@@ -119,8 +120,21 @@ public class UserView implements LibraryView {
                 	String newpassword=sc.nextLine();
                 	System.out.println(userDAO.ChangePassword(email, oldpassword, newpassword));
                 	break;
-
+                	
                 case 5:
+                	sc.nextLine();
+                	System.out.print("Enter a book Name: ");
+                	String bookName=sc.nextLine();
+                	int k=userDAO.getSelfNoByBookName(bookName);
+                	if(k!=-1) {
+                		 System.out.println("The shelf number for '" + bookName + "' is: " +k);
+                	}
+                	else {
+                		System.out.println("Book not found!");
+                	}
+                	break;
+
+                case 6:
                     exit = true;
                     System.out.println("Exiting Library System...");
                     break;

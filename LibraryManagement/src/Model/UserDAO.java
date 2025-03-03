@@ -7,6 +7,7 @@ public interface UserDAO {
     User getUserById(int userId) ;
     boolean doesUserExist(int userId);
     int registerUser(User user, String password); 
+    int getSelfNoByBookName(String bookName);
     public String ChangePassword(String email,String oldpassword,String newpassword);
     boolean CheckPassword(String email,String password);
     User loginUser(String email, String password);

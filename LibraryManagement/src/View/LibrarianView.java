@@ -88,7 +88,8 @@ public class LibrarianView implements LibraryView {
             System.out.println("4. Mark Fees as Paid");
             System.out.println("5. View All Users");
             System.out.println("6. Get All Books");
-            System.out.println("7. Exit");
+            System.out.println("7.shelf number of Book");
+            System.out.println("8. Exit");
             System.out.print("Enter your choice: ");
             int choice = sc.nextInt();
 
@@ -153,8 +154,19 @@ public class LibrarianView implements LibraryView {
                 case 6:
                 	System.out.println(controller.getAllBook());
                 	break;
-
                 case 7:
+                	System.out.print("Enter a book Name: ");
+                	String Name=sc.nextLine();
+                	int k=userDAO.getSelfNoByBookName(Name);
+                	if(k!=-1) {
+                		 System.out.println("The shelf number for '" + Name + "' is: " +k);
+                	}
+                	else {
+                		System.out.println("Book not found!");
+                	}
+                	break;
+
+                case 8:
                     exit = true;
                     System.out.println("Exiting Librarian System...");
                     break;

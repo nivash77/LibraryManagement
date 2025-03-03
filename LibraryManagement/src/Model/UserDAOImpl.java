@@ -33,6 +33,8 @@ public class UserDAOImpl implements UserDAO {
         }
         return null; 
     }
+    
+    
     public String addUser(User user, String password) throws SQLException {
         String query = "INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, ?)";
         int rowsAffected = db.executeUpdate(query,
@@ -70,6 +72,27 @@ public class UserDAOImpl implements UserDAO {
         }
         return -1; 
     }
+    
+    public int getSelfNoByBookName(String bookName) {
+        String query = "SELECT d.selfNo " +
+                       "FROM Books b " +
+                       "JOIN Domains d ON b.domainId = d.domainId " +
+                       "WHERE b.bookName = ?";
+        try  {
+           
+            ResultSet rs = db.executeQuery(query,bookName);
+            if (rs.next()) {
+                return rs.getInt("selfNo"); 
+            } else {
+                return -1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1; 
+        }
+    }
+
+    
     public String ChangePassword(String email,String oldpassword,String newpassword) {
     	if(!doesUserExistByEmail(email)) {
     		return "User does Not Exists";
