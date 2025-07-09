@@ -16,7 +16,7 @@ Features
 -  View all borrowed books and users
 
  Concepts Used
-- Object-Oriented Programming (OOP)**:
+- Object-Oriented Programming (OOP):
   - Encapsulation
   - Inheritance
   - Polymorphism
